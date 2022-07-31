@@ -1,0 +1,12 @@
+# Python environment
+/venv/
+
+# Non-template environment variables
+.env.*
+!.env.template
+
+# Outputs and misc folders
+__pycache__/
+/.*/
+/dump/
+/reader-outputs/

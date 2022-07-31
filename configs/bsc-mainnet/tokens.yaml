@@ -1,0 +1,185 @@
+# -------------------------------------
+# Token holdings and pricing strategy
+# -------------------------------------
+WBNB:
+  address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0x0567f2323251f0aab15c8dfb1967e4e8a7d42aee"
+BUSD:
+  address: "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56"
+  decimals: 18
+  pricing:
+    id: "pancakeswap"
+    address: "0x7EFaEf62fDdCCa950418312c6C91Aef321375A00"
+    index: 1
+    quote: "USDT"
+    # id: "chainlink"
+    # address: "0xcbb98864ef56e9042e7d2efef76141f15731b82f"
+USDT:
+  address: "0x55d398326f99059fF775485246999027B3197955"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0xb97ad0e74fa7d920791e90258a6e2085088b4320"
+USDC:
+  address: "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0x51597f405303c4377e36123cbc172b13269ea163"
+DAI:
+  address: "0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0x132d3C0B1D2cEa0BC552588063bdBb210FDeecfA"
+TUSD:
+  address: "0x14016E85a25aeb13065688cAFB43044C2ef86784"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0xa3334a9762090e827413a7495afece76f41dfc06"
+BTCB:
+  address: "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0x264990fbd0a4796a3e3d8e37c4d5f87a3aca5ebf"
+ETH:
+  address: "0x2170Ed0880ac9A755fd29B2688956BD959F933F8"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0x9ef1b8c0e4f7dc8bf5719ea496883dc6401d5b2e"
+ADA:
+  address: "0x3EE2200Efb3400fAbB9AacF31297cBdD1d435D47"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0xa767f745331D267c7751297D982b050c93985627"
+SXP:
+  address: "0x47BEAd2563dCBf3bF2c9407fEa4dC236fAbA485A"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0xe188a9875af525d25334d75f3327863b2b8cd0f1"
+XVS:
+  address: "0xcF6BB5389c92Bdda8a3747Ddb454cB7a64626C63"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0xbf63f430a79d4036a5900c19818aff1fa710f206"
+DOT:
+  address: "0x7083609fCE4d1d8Dc0C979AAb8c869Ea2C873402"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0xc333eb0086309a16aa7c8308dfd32c8bba0a2592"
+LTC:
+  address: "0x4338665CBB7B2485A8855A139b75D5e34AB0DB94"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0x74e72f37a8c415c8f1a98ed42e78ff997435791d"
+XRP:
+  address: "0x1D2F0da169ceB9fC7B3144628dB156f3F6c60dBE"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0x93a67d414896a280bf8ffb3b389fe3686e014fda"
+BCH:
+  address: "0x8fF795a6F4D97E7887C79beA79aba5cc76444aDf"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0x43d80f616daf0b0b42a928eed32147dc59027d41"
+LINK:
+  address: "0xF8A0BF9cF54Bb92F17374d9e9A321E6a111a51bD"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0xca236e327f629f9fc2c30a4e95775ebf0b89fac8"
+FIL:
+  address: "0x0D8Ce2A99Bb6e3B7Db580eD848240e4a0F9aE153"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0xe5dbfd9003bff9df5feb2f4f445ca00fb121fb83"
+BETH:
+  address: "0x250632378E573c6Be1AC2f97Fcdf00515d0Aa91B"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0x2a3796273d47c4ed363b361d3aefb7f7e2a13782"
+DOGE:
+  address: "0xbA2aE424d960c26247Dd6c32edC70B295c744C43"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0x3ab0a0d137d4f946fbb19eecc6e92e64660231c8"
+MATIC:
+  address: "0xCC42724C6683B7E57334c4E856f4c9965ED682bD"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0x7ca57b0ca6367191c94c8914d7df09a57655905f"
+CAKE:
+  address: "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0xb6064ed41d4f67e353768aa239ca86f4f73665a1"
+AAVE:
+  address: "0xfb6115445Bff7b52FeB98650C87f44907E58f802"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0xa8357bf572460fc40f4b0acacbb2a6a61c89f475"
+TRX:
+  address: "0x85EAC5Ac2F758618dFa09bDbe0cf174e7d574D5B"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0xf4c5e535756d11994fcbb12ba8add0192d9b88be"
+METIS:
+  address: "0xe552Fb52a4F19e44ef5A967632DBc320B0820639"
+  decimals: 18
+  pricing:
+    id: "pancakeswap"
+    address: "0x69AFe59e88614501c3fDEb7480f12DBA0A414032"
+    index: 1
+    quote: "BNB"
+GAL:
+  address: "0xe4Cc45Bb5DBDA06dB6183E8bf016569f40497Aa5"
+  decimals: 18
+  pricing:
+    id: "pancakeswap"
+    address: "0xbe6A4f74fdDc88853612C50D7404E059b37692D8"
+    index: 1
+    quote: "BNB"
+RPG:
+  address: "0xc2098a8938119A52B1F7661893c0153A6CB116d5"
+  decimals: 18
+  pricing:
+    id: "pancakeswap"
+    address: "0xbe6A4f74fdDc88853612C50D7404E059b37692D8"
+    index: 1
+    quote: "BNB"
+FROYO:
+  address: "0xe369fec23380f9F14ffD07a1DC4b7c1a9fdD81c9"
+  decimals: 18
+  pricing:
+    id: "pancakeswap"
+    address: "0x1Ce76390Dd210B9C9ae28373FDf79714206ECb73"
+    index: 1
+    quote: "BNB"
+ANKR:
+  address: "0xf307910A4c7bbc79691fD374889b36d8531B08e3"
+  decimals: 18
+  pricing:
+    id: "pancakeswap"
+    address: "0x0378137170DD3467d00a8c3DC5C941Ba3a350a91"
+    index: 1
+    quote: "BNB"

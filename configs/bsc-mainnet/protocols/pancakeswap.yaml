@@ -1,0 +1,311 @@
+# Cake farming
+cake_pool: "0x45c54210128a065de780C4B0Df3d16664f7f859e"
+smart_chefs:
+  CAKE-METIS: "0xC0A94bFF88EdCae7D5d79294C0e9954Ed75CBCb7"
+  # CAKE-GAL: "0xa5D57C5dca083a7051797920c78fb2b19564176B"
+  # CAKE-RPG: "0xD1c395BCdC2d64ac6544A34A36185483B00530a1"
+  # CAKE-ANKR: "0xc581345e1648CcE154978eA80bF8A584EC8aFDe0"
+  # CAKE-FROYO: "0x84e3208578eE7db397a3d584d97Fea107b15bF35"
+
+# Swaps and LP farming
+master_chef_v1: "0x73feaa1eE314F8c655E354234017bE2193C9E24E"
+master_chef_v2: "0xa5f8C5Dbd5F286960b9d90548680aE5ebFf07652"
+router: "0x10ED43C718714eb63d5aA57B78B54704E256024E"
+pairs:
+  CAKE-BNB:
+    address: "0x0eD7e52944161450477ee417DE9Cd3a859b14fD0"
+    pid: 2
+  BUSD-BNB:
+    address: "0x58F876857a02D6762E0101bb5C46A8c1ED44Dc16"
+    pid: 3
+  # METIS-BNB:
+  #   address: "0x69AFe59e88614501c3fDEb7480f12DBA0A414032"
+  #   pid: 100
+  # XCN-BNB:
+  #   address: "0xF01eD80d46759c0cf6A3e9c66856017d81284962"
+  #   pid: 99
+  # HOTCROSS-BNB:
+  #   address: "0xf23bad605e94de0e3b60c9718a43a94a5af43915"
+  #   pid: 38
+  # WZRD-BUSD:
+  #   address: "0xee456d906a38e10680c9d157FFf143390e9681bA"
+  #   pid: 94
+  # GAL-BNB:
+  #   address: "0xbe6A4f74fdDc88853612C50D7404E059b37692D8"
+  #   pid: 98
+  # RPG-BUSD:
+  #   address: "0x55cdb14855220b239Cf857A03849D96736b9103f"
+  #   pid: 97
+  # 8PAY-BUSD:
+  #   address: "0x92c3E2cddDb0CE886bCA864151BD4d611A86E563"
+  #   pid: 96
+  # HAPPY-BNB:
+  #   address: "0x008604A38cD589680F7B8f085DC2D5B4F81151dB"
+  #   pid: 93
+  # aBNBc-BNB:
+  #   address: "0x272c2CF847A49215A3A1D4bFf8760E503A06f880"
+  #   pid: 95
+  # CEEK-BNB:
+  #   address: "0x046A9B3A9b743340eE2Bc4C6dDD35543E237C6c2"
+  #   pid: 92
+  # TINC-BNB:
+  #   address: "0x0d5b9A0f4315a4bcE36D1Ea7d6B6d3123167aFAa"
+  #   pid: 91
+  # PEX-BNB:
+  #   address: "0x5ca96E8bDe0Bc587DaC9e02422Fd205b1102DAa4"
+  #   pid: 90
+  # GMI-BNB:
+  #   address: "0x58d4B61983Ca0aFE6E352e90719F403E24e016F4"
+  #   pid: 89
+  # FROYO-CAKE:
+  #   address: "0x1CCc3cC95c8148477Afd18a552f03835Be9D182a"
+  #   pid: 88
+  # BSW-BNB:
+  #   address: "0x8ca3ff14a52b080c54a6d1a405eeca02959d39fe"
+  #   pid: 87
+  # DUET-CAKE:
+  #   address: "0xbDF0aA1D1985Caa357A6aC6661D838DA8691c569"
+  #   pid: 86
+  # GMT-USDC:
+  #   address: "0x007EC643C7Cc33a70C083fC305c283dd009C8b94"
+  #   pid: 85
+  # ERA-BNB:
+  #   address: "0x53a63ac301d6410915385294527f947aff616599"
+  #   pid: 84
+  # BTT-BUSD:
+  #   address: "0xB7E73DaEe6A6Ca37A21f8E4bfba4DA448DFE4d92"
+  #   pid: 83
+  # ACH-USDT:
+  #   address: "0x28BDb16b623176426305a70D8B475bE73Aca71f3"
+  #   pid: 82
+  # RACA-BUSD:
+  #   address: "0x8e744ec2795c8b836689d1b4ebe1489204357dac"
+  #   pid: 81
+  # ERTHA-BNB:
+  #   address: "0x70531B39E2Bb4d8dA59E2Ce41a98eBA2990F8497"
+  #   pid: 80
+  # FUSE-BNB:
+  #   address: "0x6483F166b9E4310A165a55FEa04F867499aded06"
+  #   pid: 79
+  # FROYO-BNB:
+  #   address: "0x1Ce76390Dd210B9C9ae28373FDf79714206ECb73"
+  #   pid: 78
+  # APX-BUSD:
+  #   address: "0xa0ee789a8f581cb92dd9742ed0b5d54a0916976c"
+  #   pid: 77
+  # BCOIN-BNB:
+  #   address: "0x2Eebe0C34da9ba65521E98CBaA7D97496d05f489"
+  #   pid: 76
+  # AOG-BUSD:
+  #   address: "0x88c9bf5E334e2591C6A866D5E20683E31226Be3d"
+  #   pid: 75
+  # WOOP-BNB:
+  #   address: "0x2AE94A6C768D59f5DDc25bd7f12C7cBE1D51dc04"
+  #   pid: 74
+  # HIGH-BUSD:
+  #   address: "0xe98ac95A1dB2fCaaa9c7D4ba7ecfCE4877ca2bEa"
+  #   pid: 73
+  # DPT-BNB:
+  #   address: "0x141e9558f66Cc21c93628400cCa7d830c15c2c24"
+  #   pid: 72
+  # THG-BNB:
+  #   address: "0x486697ae24469cB1122F537924Aa46E705B142Aa"
+  #   pid: 71
+  # IDIA-BUSD:
+  #   address: "0x71E6de81381eFE0Aa98f56b3B43eB3727D640715"
+  #   pid: 70
+  # SANTOS-BNB:
+  #   address: "0x06043B346450BbCfdE066ebc39fdc264FdFFeD74"
+  #   pid: 69
+  # QI-BNB:
+  #   address: "0xf924E642f05ACC57fc3b14990c2B1a137683b201"
+  #   pid: 68
+  # PORTO-BNB:
+  #   address: "0x0A292e96ABb35297786a38fDD67Dc4f82689E670"
+  #   pid: 67
+  # XWG-USDC:
+  #   address: "0x936928146a21AfCcd30DfA84824A780572B1630B"
+  #   pid: 66
+  # DAR-BNB:
+  #   address: "0x062f88E2B4896e823ac78Ac314468c29eEC4186d"
+  #   pid: 65
+  # FINA-BUSD:
+  #   address: "0x6dB23b5360c9D2859fDcbf41c56494e7b8573649"
+  #   pid: 64
+  # DKT-BNB:
+  #   address: "0x365c3F921b2915a480308D0b1C04aEF7B99c2876"
+  #   pid: 63
+  # LAZIO-BNB:
+  #   address: "0x11c0b2bb4fbb430825d07507a9e24e4c32f7704d"
+  #   pid: 62
+  # BETA-BNB:
+  #   address: "0x88a02d94f437799f06f8c256ff07aa397e6d0016"
+  #   pid: 61
+  # NFT-BNB:
+  #   address: "0x0ecc84c9629317a494f12bc56aa2522475bf32e8"
+  #   pid: 60
+  # SFUND-BNB:
+  #   address: "0x74fA517715C4ec65EF01d55ad5335f90dce7CC87"
+  #   pid: 59
+  # BP-BNB:
+  #   address: "0x2bF2dEB40639201C9A94c9e33b4852D9AEa5fd2D"
+  #   pid: 58
+  # RUSD-BUSD:
+  #   address: "0x59FaC9e98479fc9979aE2a0C7422Af50bCBB9B26"
+  #   pid: 57
+  # TRX-BUSD:
+  #   address: "0xb5d108578be3750209d1b3a8f45ffee8c5a75146"
+  #   pid: 56
+  # WIN-BUSD:
+  #   address: "0x6a445ceb72c8b1751755386c3990055ff92e14a0"
+  #   pid: 55
+  # SPS-BNB:
+  #   address: "0xfdfde3af740a22648b9dd66d05698e5095940850"
+  #   pid: 54
+  # C98-BNB:
+  #   address: "0x92247860A03F48d5c6425c7CA35CDcFCB1013AA1"
+  #   pid: 53
+  # AXS-BNB:
+  #   address: "0xC2d00De94795e60FB76Bc37d899170996cBdA436"
+  #   pid: 52
+  # CHESS-USDC:
+  #   address: "0x1472976e0b97f5b2fc93f1fff14e2b5c4447b64f"
+  #   pid: 51
+  # ONE-BNB:
+  #   address: "0x9d2296e2fe3cdbf2eb3e3e2ca8811bafa42eedff"
+  #   pid: 50
+  # DVI-BNB:
+  #   address: "0x89ebf9cd99864f6e51bd7a578965922029cab977"
+  #   pid: 49
+  USDC-USDT:
+    address: "0xec6557348085aa57c72514d67070dc863c0a5a8c"
+    pid: 48
+  # CAKE-USDT:
+  #   address: "0xA39Af17CE4a8eb807E076805Da1e2B8EA7D0755b"
+  #   pid: 47
+  # BSCPAD-BNB:
+  #   address: "0xba01662e978de7d67f8ffc937726215eb8995d17"
+  #   pid: 46
+  # WOO-BNB:
+  #   address: "0x89eE0491CE55d2f7472A97602a95426216167189"
+  #   pid: 45
+  # ETH-USDC:
+  #   address: "0xEa26B78255Df2bBC31C1eBf60010D78670185bD0"
+  #   pid: 44
+  # BTCB-ETH:
+  #   address: "0xD171B26E4484402de70e3Ea256bE5A2630d7e88D"
+  #   pid: 43
+  # MBOX-BNB:
+  #   address: "0x8FA59693458289914dB0097F5F366d771B7a7C3F"
+  #   pid: 42
+  # TUSD-BUSD:
+  #   address: "0x2e28b9b74d6d99d4697e913b82b41ef1cac51c6c"
+  #   pid: 41
+  # CHR-BUSD:
+  #   address: "0x6045931e511ef7e53a4a817f971e0ca28c758809"
+  #   pid: 40
+  # CAKE-BUSD:
+  #   address: "0x804678fa97d91B974ec2af3c843270886528a9E6"
+  #   pid: 39
+  # DOGE-BNB:
+  #   address: "0xac109c8025f272414fd9e2faa805a583708a017f"
+  #   pid: 37
+  # BTCB-BUSD:
+  #   address: "0xf45cd219aef8618a92baa7ad848364a158a24f33"
+  #   pid: 36
+  # ALPACA-BUSD:
+  #   address: "0x7752e1fa9f3a2e860856458517008558deb989e3"
+  #   pid: 35
+  # TLM-BNB:
+  #   address: "0xE6b421a4408c82381b226Ab5B6F8C4b639044359"
+  #   pid: 34
+  # EPS-BNB:
+  #   address: "0xddE420cbB3794ebD8FFC3Ac69F9c78e5d1411870"
+  #   pid: 33
+  # TKO-BNB:
+  #   address: "0xFFd4B200d3C77A0B691B5562D804b3bd54294e6e"
+  #   pid: 32
+  # BIFI-BNB:
+  #   address: "0x3f1A9f3D9aaD8bD339eD4853F345d2eF89fbfE0c"
+  #   pid: 31
+  # ALICE-BNB:
+  #   address: "0xcAD7019D6d84a3294b0494aEF02e73BD0f2572Eb"
+  #   pid: 30
+  # BELT-BNB:
+  #   address: "0xF3Bc6FC080ffCC30d93dF48BFA2aA14b869554bb"
+  #   pid: 29
+  # RAMP-BUSD:
+  #   address: "0xE834bf723f5bDff34a5D1129F3c31Ea4787Bc76a"
+  #   pid: 28
+  # IOTX-BUSD:
+  #   address: "0xc13aA76AAc067c86aE38028019F414D731b3D86A"
+  #   pid: 27
+  # SUSHI-ETH:
+  #   address: "0x16aFc4F2Ad82986bbE2a4525601F8199AB9c832D"
+  #   pid: 26
+  # SFP-BNB:
+  #   address: "0x942b294e59a8c47a0F7F20DF105B082710F7C305"
+  #   pid: 25
+  # LINA-BUSD:
+  #   address: "0xC5768c5371568Cf1114cddD52CAeD163A42626Ed"
+  #   pid: 24
+  # UST-BUSD:
+  #   address: "0x05faf555522Fa3F93959F86B41A3808666093210"
+  #   pid: 23
+  # BTCST-BNB:
+  #   address: "0xB2678C414ebC63c9CC6d1a0fC45f43E249B50fdE"
+  #   pid: 22
+  # LTC-BNB:
+  #   address: "0x71b01eBdDD797c8E9E0b003ea2f4FD207fBF46cC"
+  #   pid: 21
+  # USDC-BUSD:
+  #   address: "0x2354ef4DF11afacb85a5C7f98B624072ECcddbB1"
+  #   pid: 20
+  # DAI-BUSD:
+  #   address: "0x66FDB2eCCfB58cF098eaa419e5EfDe841368e489"
+  #   pid: 19
+  # VAI-BUSD:
+  #   address: "0x133ee93FE93320e1182923E1a640912eDE17C90C"
+  #   pid: 18
+  # SXP-BNB:
+  #   address: "0xD8E2F8b6Db204c405543953Ef6359912FE3A88d6"
+  #   pid: 17
+  # INJ-BNB:
+  #   address: "0x1BdCebcA3b93af70b58C41272AEa2231754B23ca"
+  #   pid: 16
+  # UNI-BNB:
+  #   address: "0x014608E87AF97a054C9a49f81E1473076D51d9a3"
+  #   pid: 15
+  # XRP-BNB:
+  #   address: "0x03F18135c44C64ebFdCBad8297fe5bDafdBbdd86"
+  #   pid: 14
+  USDT-BNB:
+    address: "0x16b9a82891338f9bA80E2D6970FddA79D1eb0daE"
+    pid: 13
+  # ALPHA-BNB:
+  #   address: "0xACF47CBEaab5c8A6Ee99263cfE43995f89fB3206"
+  #   pid: 12
+  BTCB-BNB:
+    address: "0x61EB789d75A95CAa3fF50ed7E47b96c132fEc082"
+    pid: 11
+  ETH-BNB:
+    address: "0x74E4716E431f45807DCF19f284c7aA99F18a4fbc"
+    pid: 10
+  # XVS-BNB:
+  #   address: "0x7EB5D86FD78f3852a3e0e064f2842d45a3dB6EA2"
+  #   pid: 9
+  # TWT-BNB:
+  #   address: "0x3DcB1787a95D2ea0Eb7d00887704EeBF0D79bb13"
+  #   pid: 8
+  USDT-BUSD:
+    address: "0x7EFaEf62fDdCCa950418312c6C91Aef321375A00"
+    pid: 7
+  # LINK-BNB:
+  #   address: "0x824eb9faDFb377394430d2744fa7C42916DE3eCe"
+  #   pid: 6
+  # DOT-BNB:
+  #   address: "0xDd5bAd8f8b360d76d12FdA230F8BAF42fe0022CF"
+  #   pid: 5
+  ADA-BNB:
+    address: "0x28415ff2C35b65B9E5c7de82126b4015ab9d031F"
+    pid: 4

@@ -1,0 +1,36 @@
+WBNB:
+  address: '0x5FbDB2315678afecb367f032d93F642f64180aa3'
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512'
+TKN1:
+  address: '0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44'
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: '0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f'
+TKN2:
+  address: '0x9d4454B023096f34B160D6B654540c56A1F81688'
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: '0x5eb3Bc0a489C5A8288765d2336659EbCA68FCd00'
+TKN3:
+  address: '0xdbC43Ba45381e02825b14322cDdd15eC4B3164E6'
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: '0x04C89607413713Ec9775E14b954286519d836FEf'
+CAKE:
+  address: "0x4C2F7092C2aE51D986bEFEe378e50BD4dB99C901"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0x7A9Ec1d04904907De0ED7b6839CcdD59c3716AC9"
+XVS:
+  address: "0xefc1aB2475ACb7E60499Efb171D173be19928a05"
+  decimals: 18
+  pricing:
+    id: "chainlink"
+    address: "0xD49a0e9A4CD5979aE36840f542D2d7f02C4817Be"
