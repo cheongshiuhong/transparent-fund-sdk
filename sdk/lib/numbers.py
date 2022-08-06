@@ -1,10 +1,11 @@
 # Standard libraries
 from __future__ import annotations
 from copy import deepcopy
-from typing import TypedDict
+from typing import TypedDict, Union
 
 # 3rd party libraries
 from pydantic import BaseModel
+from web3 import Web3
 
 
 class NumberDict(TypedDict):
@@ -119,6 +120,14 @@ class Number(BaseModel):
     def __float__(self) -> float:
         result: float = self.value / 10**self.decimals
         return result
+
+    @classmethod
+    def from_wei(self, amount_wei: int) -> Number:
+        return Number(value=amount_wei, decimals=18)
+
+    @classmethod
+    def from_ether(self, amount_ether: Union[int, float]) -> Number:
+        return Number.from_wei(Web3.toWei(amount_ether, 'ether'))
 
 
 class LongShortNumbers(BaseModel):

@@ -10,6 +10,7 @@ sys.path.insert(1, os.getcwd())
 from dotenv import load_dotenv
 
 # Code
+from sdk.lib.numbers import Number
 from sdk.chains.bsc.configs import BscConfig
 from sdk.chains.bsc.readers.aggregator import BscAggregator
 
@@ -25,6 +26,20 @@ bsc_config = BscConfig(
     rpc_uri=os.environ.get("BSC_RPC_URI")
 )
 bsc_aggregator = BscAggregator(bsc_config)
+
+#################
+## Read prices ##
+#################
+cake_price = bsc_aggregator.get_price_sync('CAKE')
+print(f'CAKE Price: {float(cake_price)}')
+
+amount_bnb = Number.from_ether(1.23)
+amount_busd = bsc_aggregator.convert_units_sync(
+    amount=amount_bnb,
+    from_symbol='BNB',
+    to_symbol='BUSD'
+)
+print(f'{float(amount_bnb)} BNB = {float(amount_busd)} BUSD')
 
 ##################
 ## Read reports ##
