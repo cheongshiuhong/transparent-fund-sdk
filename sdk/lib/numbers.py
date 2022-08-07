@@ -127,7 +127,7 @@ class Number(BaseModel):
 
     @classmethod
     def from_ether(self, amount_ether: Union[int, float]) -> Number:
-        return Number.from_wei(Web3.toWei(amount_ether, 'ether'))
+        return Number.from_wei(Web3.toWei(amount_ether, "ether"))
 
 
 class LongShortNumbers(BaseModel):

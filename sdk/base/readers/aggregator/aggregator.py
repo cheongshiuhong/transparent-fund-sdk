@@ -54,23 +54,22 @@ class BaseAggregator(Generic[TDetails, TPricedDetails]):
             self.price_readers[symbol] = price_readers[token.pricing.id]
 
     async def convert_units_async(
-        self,
-        amount: Number,
-        from_symbol: str,
-        to_symbol: str
+        self, amount: Number, from_symbol: str, to_symbol: str
     ) -> Number:
         async with ClientSession() as session:
             # So we just set the position to 0
             price_resolver = LazyPriceResolver(self.price_readers)
-            price_resolver.update_positions(PositionsDict())            
+            price_resolver.update_positions(PositionsDict())
 
             # Get the exchange ratio
             from_price: Number
             to_price: Number
-            from_price, to_price = await asyncio.gather(*[
-                price_resolver.resolve_price(from_symbol, session),
-                price_resolver.resolve_price(to_symbol, session)
-            ])
+            from_price, to_price = await asyncio.gather(
+                *[
+                    price_resolver.resolve_price(from_symbol, session),
+                    price_resolver.resolve_price(to_symbol, session),
+                ]
+            )
 
             return amount * from_price // to_price
 
@@ -88,7 +87,7 @@ class BaseAggregator(Generic[TDetails, TPricedDetails]):
         amount: Number,
         from_symbol: str,
         to_symbol: str,
-        is_background: bool = False
+        is_background: bool = False,
     ) -> Number:
         result: Number = self.__async_to_sync(
             self.convert_units_async(amount, from_symbol, to_symbol), is_background

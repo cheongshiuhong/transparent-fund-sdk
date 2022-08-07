@@ -39,6 +39,9 @@ from .types import (
 # -----------
 # Constants
 # -----------
+# Pair.token0
+TOKEN_0_OUTPUT_TYPES = ["address"]
+TOKEN_0_SELECTOR = selector_from_sig("token0()")
 # Pair.getReserves
 PAIR_GET_RESERVES_OUTPUT_TYPES = ["uint256", "uint256", "uint256"]
 PAIR_GET_RESERVES_SELECTOR = selector_from_sig("getReserves()")
@@ -137,6 +140,8 @@ class PancakeswapReportReader(IPancakeswapReportReader):
         # Encode the arguments into a multicall
         multicall_calldata = encode_multicall_inputs(
             [
+                # Token 0
+                (pair.address, TOKEN_0_SELECTOR),
                 # Reserves
                 (pair.address, PAIR_GET_RESERVES_SELECTOR),
                 # Total supply
@@ -172,23 +177,30 @@ class PancakeswapReportReader(IPancakeswapReportReader):
         _, outputs = decode_multicall_result(result)
 
         # Decode the individual outputs
+        token_0_address: str
         reserve_0_int: int
         reserve_1_int: int
         total_supply_int: int
         holding_balance_int: int
         farming_balance_int: int
+        (token_0_address,) = decode_result(TOKEN_0_OUTPUT_TYPES, outputs[0])
         reserve_0_int, reserve_1_int, _ = decode_result(
-            PAIR_GET_RESERVES_OUTPUT_TYPES, outputs[0]
+            PAIR_GET_RESERVES_OUTPUT_TYPES, outputs[1]
         )
-        (total_supply_int,) = decode_result(PAIR_TOTAL_SUPPLY_OUTPUT_TYPES, outputs[1])
-        (holding_balance_int,) = decode_result(PAIR_BALANCE_OF_OUTPUT_TYPES, outputs[2])
+        (total_supply_int,) = decode_result(PAIR_TOTAL_SUPPLY_OUTPUT_TYPES, outputs[2])
+        (holding_balance_int,) = decode_result(PAIR_BALANCE_OF_OUTPUT_TYPES, outputs[3])
         farming_balance_int, *_ = decode_result(
-            MASTER_CHEF_V2_USER_INFO_OUTPUT_TYPES, outputs[3]
+            MASTER_CHEF_V2_USER_INFO_OUTPUT_TYPES, outputs[4]
         )
 
         # Return None since there is nothing to compute/structure
         if holding_balance_int == 0 and farming_balance_int == 0:
             return PositionsDict(), None
+
+        # Flip the symbols and decimals if in wrong order before computing
+        if self.tokens[symbol_0].address != token_0_address:
+            symbol_0, symbol_1 = symbol_1, symbol_0
+            decimals_0, decimals_1 = decimals_1, decimals_0
 
         # Parse the outputs into the `Value` struct
         reserve_0 = Number(value=reserve_0_int, decimals=decimals_0)
