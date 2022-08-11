@@ -9,9 +9,11 @@ from eth_utils import to_checksum_address
 # Code
 from sdk.lib.numbers import Number, LongShortNumbers
 from sdk.base.readers.constants import PERCENT_DECIMALS, PRICE_DECIMALS
+from sdk.base.readers.prices import IPriceResolver
 from sdk.base.readers.structs import PositionsDict, PricedPosition, PricedPositionsDict
 from sdk.base.readers.utils.calls import (
     make_eth_call,
+    make_eth_storage_call,
     encode_calldata,
     decode_result,
 )
@@ -19,8 +21,8 @@ from sdk.base.readers.utils.multicall import (
     encode_multicall_inputs,
     decode_multicall_result,
 )
-from sdk.base.readers.prices import IPriceResolver
 from sdk.base.readers.utils.selectors import selector_from_sig
+from sdk.base.readers.utils.slots import get_map_storage_address
 from sdk.chains.bsc.configs import BscConfig
 from .types import (
     VenusPoolSnapshot,
@@ -79,6 +81,9 @@ class VenusReportReader(IVenusReportReader):
         self.tokens = config.tokens
         self.ETH = config.ETH
 
+        # Borrow Snapshot struct principal field
+        self.borrow_principal_slot = get_map_storage_address('address', config.fund_address, 16)
+
     # --------
     # Report
     # --------
@@ -88,6 +93,7 @@ class VenusReportReader(IVenusReportReader):
 
         Args:
             session: The async http client session.
+
         Returns:
             The venus protocol report.
         """
@@ -258,6 +264,17 @@ class VenusReportReader(IVenusReportReader):
         if supply_balance_int == 0 and borrow_balance_int == 0:
             return PositionsDict(), None
 
+        # Read the storage for borrowed principal
+        borrow_principal_balance_bytes = await make_eth_storage_call(
+            session, self.config.rpc_uri, pool_address, self.borrow_principal_slot
+        )
+        borrow_principal_balance_int: int = decode_result(
+            ['uint256'], borrow_principal_balance_bytes
+        )[0]
+
+        # Derive the interest as the difference
+        borrow_interest_balance_int = borrow_balance_int - borrow_principal_balance_int
+
         # Structuring
         positions_dict = PositionsDict(
             {
@@ -275,6 +292,14 @@ class VenusReportReader(IVenusReportReader):
         pool_snapshot = VenusPoolSnapshot(
             supply_balance=Number(value=supply_balance_int, decimals=token_decimals),
             borrow_balance=Number(value=borrow_balance_int, decimals=token_decimals),
+            borrow_principal_balance=Number(
+                value=borrow_principal_balance_int,
+                decimals=token_decimals
+            ),
+            borrow_interest_balance=Number(
+                value=borrow_interest_balance_int,
+                decimals=token_decimals
+            ),
             # Venus uses 18 decimals for these values
             supply_rate_per_block=Number(value=supply_rate_per_block_int, decimals=18),
             borrow_rate_per_block=Number(value=borrow_rate_per_block_int, decimals=18),
@@ -298,6 +323,7 @@ class VenusReportReader(IVenusReportReader):
         Args:
             price_resolver: The resolver to read prices from.
             session: The async http client session.
+
         Returns:
             The venus protocol priced report.
         """
@@ -342,11 +368,15 @@ class VenusReportReader(IVenusReportReader):
             # Make a copy of the values for computations
             supply_balance = pool.supply_balance.copy().set_decimals(18)
             borrow_balance = pool.borrow_balance.copy().set_decimals(18)
+            borrow_principal_value = pool.borrow_principal_balance.copy().set_decimals(18)
+            borrow_interest_value = pool.borrow_interest_balance.copy().set_decimals(18)
             collateral_factor = pool.collateral_factor.copy().set_decimals(18)
 
             # Track the supply and borrow values
             supply_value = supply_balance * prices[symbol]
             borrow_value = borrow_balance * prices[symbol]
+            borrow_principal_value = borrow_principal_value * prices[symbol]
+            borrow_interest_value = borrow_interest_value * prices[symbol]
             total_supply_value += supply_value
             total_borrow_value += borrow_value
 
@@ -361,6 +391,8 @@ class VenusReportReader(IVenusReportReader):
                 **pool.dict(),
                 supply_value=supply_value,
                 borrow_value=borrow_value,
+                borrow_principal_value=borrow_principal_value,
+                borrow_interest_value=borrow_interest_value,
             )
 
         max_loan_to_collateral_percent = borrow_limit // total_collateral_value

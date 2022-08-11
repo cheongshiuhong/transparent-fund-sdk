@@ -341,6 +341,24 @@ class PancakeswapEncoder(BaseProtocolEncoder):
 
         return self.lp_helper.unfarm(pair.pid, amount_lp_token)
 
+    def lp_claim_rewards(self, token_0: str, token_1: str) -> FundTxns:
+        """
+        Claims the accrued cake rewards.
+
+        Args:
+            token_0: The symbol of the first token of the lp pair.
+            token_1: The symbol of the second token of the lp pair.
+
+        Returns:
+            The list of encoded fund transactions.
+        """
+        pair = self.__get_pair_if_exists(token_0, token_1)
+
+        if not pair:
+            raise ValueError("Liquidity pool for input pair does not exist")
+
+        return self.lp_helper.claim_rewards(pair.pid)
+
     def single_farm_cake(self, amount: int, duration: int) -> FundTxns:
         """
         Farms for CAKE in the single pool.

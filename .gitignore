@@ -10,3 +10,6 @@ __pycache__/
 /.*/
 /dump/
 /reader-outputs/
+
+# Misc files
+/test*.py

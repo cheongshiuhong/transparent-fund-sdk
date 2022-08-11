@@ -12,6 +12,8 @@ from sdk.base.readers.structs import ProtocolReport, ProtocolPricedReport
 class VenusPoolSnapshot(FrozenModel):
     supply_balance: Number
     borrow_balance: Number
+    borrow_principal_balance: Number
+    borrow_interest_balance: Number
     supply_rate_per_block: Number
     borrow_rate_per_block: Number
     collateral_factor: Number
@@ -32,6 +34,8 @@ class VenusDetails(FrozenModel):
 class VenusPoolPricedDetails(VenusPoolDetails):
     supply_value: Number
     borrow_value: Number
+    borrow_principal_value: Number
+    borrow_interest_value: Number
 
 
 class VenusPricedDetails(FrozenModel):

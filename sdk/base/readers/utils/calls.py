@@ -1,19 +1,18 @@
 # Standard libraries
 from typing import Any, Sequence, Union
-import asyncio
 import json
 
 # 3rd party libraries
 from aiohttp import ClientSession
-from eth_abi import encode_abi, decode_abi
-from eth_utils import encode_hex, decode_hex
+import eth_abi
+import eth_utils
 
 
 def encode_calldata(
     selector: bytes, types: Sequence[str], values: Sequence[Union[int, str, bytes]]
 ) -> bytes:
     """
-    Encodes the selector and arguments into the calldata bytes
+    Encodes the selector and arguments into the calldata bytes.
 
     Args:
         selector: The selector bytes (first 4 bytes in keccak of signature).
@@ -23,7 +22,7 @@ def encode_calldata(
     Returns:
         The bytes of the encoded calldata.
     """
-    calldata: bytes = selector + encode_abi(types, values)
+    calldata: bytes = selector + eth_abi.encode_abi(types, values)
     return calldata
 
 
@@ -39,7 +38,7 @@ def decode_result(types: list[str], result: bytes) -> Sequence[Any]:
         The list of the decoded result values.
     """
     decoded_result: Sequence[Any]
-    decoded_result = decode_abi(types, result)
+    decoded_result = eth_abi.decode_abi(types, result)
     return decoded_result
 
 
@@ -63,8 +62,11 @@ async def call_eth_method(
     body = {"jsonrpc": "2.0", "id": 1, "method": method, "params": params}
     response = await session.post(rpc_uri, data=json.dumps(body))
     json_response = await response.json()
-    result: str = json_response["result"]
-    return result
+    try:
+        result: str = json_response["result"]
+        return result
+    except:
+        print('ERORR:', json_response)
 
 
 async def make_eth_call(
@@ -84,9 +86,34 @@ async def make_eth_call(
         The response bytes.
     """
     params: list[Union[str, dict[str, str]]]
-    params = [{"to": to, "data": encode_hex(data)}, "latest"]
+    params = [{"to": to, "data": eth_utils.encode_hex(data)}, "latest"]
 
     result = await call_eth_method(session, rpc_uri, "eth_call", params)
-    result_bytes: bytes = decode_hex(result)
+    result_bytes: bytes = eth_utils.decode_hex(result)
+
+    return result_bytes
+
+
+async def make_eth_storage_call(
+    session: ClientSession, rpc_uri: str, to: str, slot: str
+) -> bytes:
+    """
+    Makes an eth_getStorageAt call to the node porvider to perform
+    a direct read from a contract's storage slot.
+
+    Args:
+        session: The async client session.
+        rpc_uri: The node provider's rpc endpoint.
+        to: The contract to read the storage of.
+        slot: The slot identifer to read from.
+
+    Returns:
+        The response bytes.
+    """
+    params: tuple[str, str, str]
+    params = (to, slot, "latest")
+
+    result = await call_eth_method(session, rpc_uri, "eth_getStorageAt", params)
+    result_bytes: bytes = eth_utils.decode_hex(result)
 
     return result_bytes

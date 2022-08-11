@@ -252,3 +252,20 @@ class PancakeswapLpHelper:
         call_data = self.master_chef_v2.encode_abi("withdraw", pid, amount_lp_token)
 
         return [FundTxn(CallType.PROTOCOL, self.config.master_chef_v2, call_data, 0)]
+
+    def claim_rewards(self, pid: int) -> FundTxns:
+        """
+        Withdraws the CAKE rewards.
+
+        NOTE: There is no interface for claiming CAKE rewards directly,
+        but can be done through calling deposit/withdraw with amount=0.
+
+        Args:
+            pid: The id of the pair recorded in the masterchef.
+    
+        Returns:
+            The list of encoded fund transactions.
+        """
+        call_data = self.master_chef_v2.encode_abi("withdraw", pid, 0)
+
+        return [FundTxns(CallType.PROTOCOL, self.config.master_chef_v2, call_data, 0)]

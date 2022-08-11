@@ -42,16 +42,20 @@ from .types import (
 # Pair.token0
 TOKEN_0_OUTPUT_TYPES = ["address"]
 TOKEN_0_SELECTOR = selector_from_sig("token0()")
+# Pair.pendingCake
+PAIR_PENDING_CAKE_INPUT_TYPES = ["uint256", "address"]
+PAIR_PENDING_CAKE_OUTPUT_TYPES = ["uint256"]
+PAIR_PENDING_CAKE_SELECTOR = selector_from_sig("pendingCake(uint256,address)")
 # Pair.getReserves
 PAIR_GET_RESERVES_OUTPUT_TYPES = ["uint256", "uint256", "uint256"]
 PAIR_GET_RESERVES_SELECTOR = selector_from_sig("getReserves()")
+# Pair.totalSupply
+PAIR_TOTAL_SUPPLY_OUTPUT_TYPES = ["uint256"]
+PAIR_TOTAL_SUPPLY_SELECTOR = selector_from_sig("totalSupply()")
 # Pair.balanceOf
 PAIR_BALANCE_OF_INPUT_TYPES = ["address"]
 PAIR_BALANCE_OF_OUTPUT_TYPES = ["uint256"]
 PAIR_BALANCE_OF_SELECTOR = selector_from_sig("balanceOf(address)")
-# Pair.totalSupply
-PAIR_TOTAL_SUPPLY_OUTPUT_TYPES = ["uint256"]
-PAIR_TOTAL_SUPPLY_SELECTOR = selector_from_sig("totalSupply()")
 # MasterChefV2.userInfo
 MASTER_CHEF_V2_USER_INFO_INPUT_TYPES = ["uint256", "address"]
 MASTER_CHEF_V2_USER_INFO_OUTPUT_TYPES = ["uint256", "uint256", "uint256"]
@@ -112,13 +116,14 @@ class PancakeswapReportReader(IPancakeswapReportReader):
         lp_results = await lp_tasks
         for symbol, lp_result in zip(pair_symbols, lp_results):
             positions, lp_details = lp_result
-            if lp_details is not None:
-                combined_positions += positions
-                combined_details.lps[symbol] = lp_details
+            if lp_details is None: continue
+            combined_positions += positions
+            combined_details.lps[symbol] = lp_details
 
         # Record the smart chef results
         smart_chef_results = await smart_chef_tasks
         for symbol, positions in zip(smart_chef_symbols, smart_chef_results):
+            if not positions: continue
             combined_positions += positions
             combined_details.smart_chefs[symbol] = positions
 
@@ -142,6 +147,15 @@ class PancakeswapReportReader(IPancakeswapReportReader):
             [
                 # Token 0
                 (pair.address, TOKEN_0_SELECTOR),
+                # Cake rewards
+                (
+                    self.protocol.master_chef_v2,
+                    encode_calldata(
+                        PAIR_PENDING_CAKE_SELECTOR,
+                        PAIR_PENDING_CAKE_INPUT_TYPES,
+                        [pair.pid, self.config.fund_address],
+                    ),
+                ),
                 # Reserves
                 (pair.address, PAIR_GET_RESERVES_SELECTOR),
                 # Total supply
@@ -178,19 +192,21 @@ class PancakeswapReportReader(IPancakeswapReportReader):
 
         # Decode the individual outputs
         token_0_address: str
+        cake_accrued_rewards_int: int
         reserve_0_int: int
         reserve_1_int: int
         total_supply_int: int
         holding_balance_int: int
         farming_balance_int: int
         (token_0_address,) = decode_result(TOKEN_0_OUTPUT_TYPES, outputs[0])
-        reserve_0_int, reserve_1_int, _ = decode_result(
-            PAIR_GET_RESERVES_OUTPUT_TYPES, outputs[1]
+        (cake_accrued_rewards_int,) = decode_result(PAIR_PENDING_CAKE_OUTPUT_TYPES, outputs[1])
+        (reserve_0_int, reserve_1_int, _) = decode_result(
+            PAIR_GET_RESERVES_OUTPUT_TYPES, outputs[2]
         )
-        (total_supply_int,) = decode_result(PAIR_TOTAL_SUPPLY_OUTPUT_TYPES, outputs[2])
-        (holding_balance_int,) = decode_result(PAIR_BALANCE_OF_OUTPUT_TYPES, outputs[3])
-        farming_balance_int, *_ = decode_result(
-            MASTER_CHEF_V2_USER_INFO_OUTPUT_TYPES, outputs[4]
+        (total_supply_int,) = decode_result(PAIR_TOTAL_SUPPLY_OUTPUT_TYPES, outputs[3])
+        (holding_balance_int,) = decode_result(PAIR_BALANCE_OF_OUTPUT_TYPES, outputs[4])
+        (farming_balance_int, *_) = decode_result(
+            MASTER_CHEF_V2_USER_INFO_OUTPUT_TYPES, outputs[5]
         )
 
         # Return None since there is nothing to compute/structure
@@ -202,7 +218,11 @@ class PancakeswapReportReader(IPancakeswapReportReader):
             symbol_0, symbol_1 = symbol_1, symbol_0
             decimals_0, decimals_1 = decimals_1, decimals_0
 
-        # Parse the outputs into the `Value` struct
+        # Parse the outputs into the `Number` struct
+        cake_accrued_rewards = Number(
+            value=cake_accrued_rewards_int,
+            decimals=self.tokens['CAKE'].decimals
+        )
         reserve_0 = Number(value=reserve_0_int, decimals=decimals_0)
         reserve_1 = Number(value=reserve_1_int, decimals=decimals_1)
         # Pancakeswap uses 18 decimals for PancakePair
@@ -226,12 +246,14 @@ class PancakeswapReportReader(IPancakeswapReportReader):
         # Structuring
         positions_dict = PositionsDict(
             {
+                'CAKE': LongShortNumbers(net=cake_accrued_rewards, long=cake_accrued_rewards),
                 symbol_0: LongShortNumbers(net=total_balance_0, long=total_balance_0),
                 symbol_1: LongShortNumbers(net=total_balance_1, long=total_balance_1),
             }
         )
 
         report = PancakeswapLpDetails(
+            cake_accrued_rewards=cake_accrued_rewards,
             holding={
                 "lp_token": holding_balance,
                 symbol_0: holding_balance_0,
@@ -336,6 +358,10 @@ class PancakeswapReportReader(IPancakeswapReportReader):
         lp_priced_details_dict: dict[str, PancakeswapLpPricedDetails] = {}
         for symbol, lp_details in report.details.lps.items():
             lp_priced_details_dict[symbol] = PancakeswapLpPricedDetails(
+                cake_accrued_rewards=PricedNetPosition(
+                    amount=lp_details.cake_accrued_rewards,
+                    value=lp_details.cake_accrued_rewards * prices['CAKE'],
+                ),
                 holding=self.__tag_prices_on_lp_details(lp_details.holding, prices),
                 farming=self.__tag_prices_on_lp_details(lp_details.farming, prices),
                 total=self.__tag_prices_on_lp_details(lp_details.total, prices),

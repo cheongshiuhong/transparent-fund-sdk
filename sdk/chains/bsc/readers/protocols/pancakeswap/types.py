@@ -10,6 +10,7 @@ from sdk.base.readers.structs import (
 
 
 class PancakeswapLpDetails(FrozenModel):
+    cake_accrued_rewards: Number
     holding: dict[str, Number]
     farming: dict[str, Number]
     total: dict[str, Number]
@@ -21,6 +22,7 @@ class PancakeswapDetails(FrozenModel):
 
 
 class PancakeswapLpPricedDetails(FrozenModel):
+    cake_accrued_rewards: PricedNetPosition
     holding: dict[str, PricedNetPosition]
     farming: dict[str, PricedNetPosition]
     total: dict[str, PricedNetPosition]
