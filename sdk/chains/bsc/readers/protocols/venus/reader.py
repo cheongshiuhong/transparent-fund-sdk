@@ -82,7 +82,9 @@ class VenusReportReader(IVenusReportReader):
         self.ETH = config.ETH
 
         # Borrow Snapshot struct principal field
-        self.borrow_principal_slot = get_map_storage_address('address', config.fund_address, 16)
+        self.borrow_principal_slot = get_map_storage_address(
+            "address", config.fund_address, 16
+        )
 
     # --------
     # Report
@@ -269,7 +271,7 @@ class VenusReportReader(IVenusReportReader):
             session, self.config.rpc_uri, pool_address, self.borrow_principal_slot
         )
         borrow_principal_balance_int: int = decode_result(
-            ['uint256'], borrow_principal_balance_bytes
+            ["uint256"], borrow_principal_balance_bytes
         )[0]
 
         # Derive the interest as the difference
@@ -293,12 +295,10 @@ class VenusReportReader(IVenusReportReader):
             supply_balance=Number(value=supply_balance_int, decimals=token_decimals),
             borrow_balance=Number(value=borrow_balance_int, decimals=token_decimals),
             borrow_principal_balance=Number(
-                value=borrow_principal_balance_int,
-                decimals=token_decimals
+                value=borrow_principal_balance_int, decimals=token_decimals
             ),
             borrow_interest_balance=Number(
-                value=borrow_interest_balance_int,
-                decimals=token_decimals
+                value=borrow_interest_balance_int, decimals=token_decimals
             ),
             # Venus uses 18 decimals for these values
             supply_rate_per_block=Number(value=supply_rate_per_block_int, decimals=18),
@@ -368,7 +368,9 @@ class VenusReportReader(IVenusReportReader):
             # Make a copy of the values for computations
             supply_balance = pool.supply_balance.copy().set_decimals(18)
             borrow_balance = pool.borrow_balance.copy().set_decimals(18)
-            borrow_principal_value = pool.borrow_principal_balance.copy().set_decimals(18)
+            borrow_principal_value = pool.borrow_principal_balance.copy().set_decimals(
+                18
+            )
             borrow_interest_value = pool.borrow_interest_balance.copy().set_decimals(18)
             collateral_factor = pool.collateral_factor.copy().set_decimals(18)
 

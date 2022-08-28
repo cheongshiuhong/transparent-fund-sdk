@@ -262,10 +262,10 @@ class PancakeswapLpHelper:
 
         Args:
             pid: The id of the pair recorded in the masterchef.
-    
+
         Returns:
             The list of encoded fund transactions.
         """
         call_data = self.master_chef_v2.encode_abi("withdraw", pid, 0)
 
-        return [FundTxns(CallType.PROTOCOL, self.config.master_chef_v2, call_data, 0)]
+        return [FundTxn(CallType.PROTOCOL, self.config.master_chef_v2, call_data, 0)]

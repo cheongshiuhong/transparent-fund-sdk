@@ -46,7 +46,7 @@ async def call_eth_method(
     session: ClientSession,
     rpc_uri: str,
     method: str,
-    params: list[Union[str, dict[str, str]]],
+    params: Union[tuple[Union[str, dict[str, str]], ...], list[Union[str, dict[str, str]]]],
 ) -> str:
     """
     Performs an rpc call to the node provider for a given method and params.
@@ -62,11 +62,8 @@ async def call_eth_method(
     body = {"jsonrpc": "2.0", "id": 1, "method": method, "params": params}
     response = await session.post(rpc_uri, data=json.dumps(body))
     json_response = await response.json()
-    try:
-        result: str = json_response["result"]
-        return result
-    except:
-        print('ERORR:', json_response)
+    result: str = json_response["result"]
+    return result
 
 
 async def make_eth_call(

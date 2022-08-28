@@ -116,14 +116,16 @@ class PancakeswapReportReader(IPancakeswapReportReader):
         lp_results = await lp_tasks
         for symbol, lp_result in zip(pair_symbols, lp_results):
             positions, lp_details = lp_result
-            if lp_details is None: continue
+            if lp_details is None:
+                continue
             combined_positions += positions
             combined_details.lps[symbol] = lp_details
 
         # Record the smart chef results
         smart_chef_results = await smart_chef_tasks
         for symbol, positions in zip(smart_chef_symbols, smart_chef_results):
-            if not positions: continue
+            if not positions:
+                continue
             combined_positions += positions
             combined_details.smart_chefs[symbol] = positions
 
@@ -199,7 +201,9 @@ class PancakeswapReportReader(IPancakeswapReportReader):
         holding_balance_int: int
         farming_balance_int: int
         (token_0_address,) = decode_result(TOKEN_0_OUTPUT_TYPES, outputs[0])
-        (cake_accrued_rewards_int,) = decode_result(PAIR_PENDING_CAKE_OUTPUT_TYPES, outputs[1])
+        (cake_accrued_rewards_int,) = decode_result(
+            PAIR_PENDING_CAKE_OUTPUT_TYPES, outputs[1]
+        )
         (reserve_0_int, reserve_1_int, _) = decode_result(
             PAIR_GET_RESERVES_OUTPUT_TYPES, outputs[2]
         )
@@ -220,8 +224,7 @@ class PancakeswapReportReader(IPancakeswapReportReader):
 
         # Parse the outputs into the `Number` struct
         cake_accrued_rewards = Number(
-            value=cake_accrued_rewards_int,
-            decimals=self.tokens['CAKE'].decimals
+            value=cake_accrued_rewards_int, decimals=self.tokens["CAKE"].decimals
         )
         reserve_0 = Number(value=reserve_0_int, decimals=decimals_0)
         reserve_1 = Number(value=reserve_1_int, decimals=decimals_1)
@@ -246,7 +249,9 @@ class PancakeswapReportReader(IPancakeswapReportReader):
         # Structuring
         positions_dict = PositionsDict(
             {
-                'CAKE': LongShortNumbers(net=cake_accrued_rewards, long=cake_accrued_rewards),
+                "CAKE": LongShortNumbers(
+                    net=cake_accrued_rewards, long=cake_accrued_rewards
+                ),
                 symbol_0: LongShortNumbers(net=total_balance_0, long=total_balance_0),
                 symbol_1: LongShortNumbers(net=total_balance_1, long=total_balance_1),
             }
@@ -360,7 +365,7 @@ class PancakeswapReportReader(IPancakeswapReportReader):
             lp_priced_details_dict[symbol] = PancakeswapLpPricedDetails(
                 cake_accrued_rewards=PricedNetPosition(
                     amount=lp_details.cake_accrued_rewards,
-                    value=lp_details.cake_accrued_rewards * prices['CAKE'],
+                    value=lp_details.cake_accrued_rewards * prices["CAKE"],
                 ),
                 holding=self.__tag_prices_on_lp_details(lp_details.holding, prices),
                 farming=self.__tag_prices_on_lp_details(lp_details.farming, prices),
