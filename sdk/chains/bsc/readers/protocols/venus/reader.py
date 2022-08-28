@@ -122,7 +122,7 @@ class VenusReportReader(IVenusReportReader):
             combined_positions["XVS"] = rewards_accrued
 
         # Instantiate the combiend details with the rewards accrued
-        combined_details = VenusDetails(xvs_accrued_rewards=rewards_accrued)
+        combined_details = VenusDetails(xvs_accrued_rewards=rewards_accrued.net)
 
         # Record the pool details and assets in
         assets_in_results = await assets_in_task

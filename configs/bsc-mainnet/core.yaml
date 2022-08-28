@@ -2,6 +2,6 @@
 # Core config
 # -------------
 multicall_address: "0xfF6FD90A470Aaa0c1B8A54681746b07AcdFedc9B"
-fund_address: "0x02c5f7Df54a1a53230C56266a9242b4209528898"
+fund_address: "0x45E017b467a38f5D83094e60a1494d19655bec22"
 fund_utils:
-  pancakeswap_lp_farming_util: "0xc3e80E585097747D977e3d83105eccf743DaF172"
+  pancakeswap_lp_farming_util: "0xc28D9777b898Fe28fe60C919a54dcb621F5e232d"

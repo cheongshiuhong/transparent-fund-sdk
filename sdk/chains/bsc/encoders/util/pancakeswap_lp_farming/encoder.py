@@ -72,7 +72,7 @@ class PancakeswapLpFarmingUtilEncoder(BaseProtocolEncoder):
 
         # Token 1 is ETH
         if self._is_eth(token_1):
-            self.contract.encode_abi(
+            call_data = self.contract.encode_abi(
                 "farmTokenAndETH",
                 (
                     self._get_token_address(token_0),
@@ -147,7 +147,7 @@ class PancakeswapLpFarmingUtilEncoder(BaseProtocolEncoder):
 
         # Token 1 is ETH
         if self._is_eth(token_1):
-            self.contract.encode_abi(
+            call_data = self.contract.encode_abi(
                 "unfarmTokenAndETH",
                 (
                     self._get_token_address(token_0),

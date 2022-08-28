@@ -386,7 +386,7 @@ class PancakeswapReportReader(IPancakeswapReportReader):
         self, sub_details_dict: dict[str, Number], prices: dict[str, Number]
     ) -> dict[str, PricedNetPosition]:
         output: dict[str, PricedNetPosition] = {}
-        lp_token_amount, lp_token_value = Number(), Number()
+        lp_token_value = Number()
         for symbol in sub_details_dict.keys() - {"lp_token"}:
             current_amount = sub_details_dict[symbol].set_decimals(POSITION_DECIMALS)
             current_value = current_amount * prices[symbol]
@@ -395,11 +395,10 @@ class PancakeswapReportReader(IPancakeswapReportReader):
             output[symbol] = PricedNetPosition(
                 amount=sub_details_dict[symbol], value=current_value
             )
-            lp_token_amount += output[symbol].amount
             lp_token_value += output[symbol].value
 
         output["lp_token"] = PricedNetPosition(
-            amount=lp_token_amount, value=lp_token_value
+            amount=sub_details_dict["lp_token"], value=lp_token_value
         )
         return output
 
